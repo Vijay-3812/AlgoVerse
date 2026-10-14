@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en" data-theme="dark" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#06080f" />
+    <meta
+      name="description"
+      content="AlgoVerse — a cinematic, trace-driven visualiser for data structures and algorithms."
+    />
+    <title>AlgoVerse — DSA Visualiser</title>
+
+    <!--
+      Fonts load from the Google Fonts CDN. Inside sandboxed previews without
+      network access the app falls back to the system stack declared in
+      tailwind.config.ts, so layout stays identical.
+    -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      // Apply the persisted theme before first paint to avoid a flash.
+      try {
+        var t = localStorage.getItem('algoverse.theme');
+        if (t === 'light' || t === 'dark' || t === 'cyberpunk') {
+          document.documentElement.dataset.theme = t;
+          document.documentElement.classList.toggle('dark', t !== 'light');
+        }
+      } catch (e) {}
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

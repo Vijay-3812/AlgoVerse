@@ -1,0 +1,23 @@
+import { chromium } from 'playwright';
+const browser = await chromium.launch();
+await ctx0.addInitScript(() => { try { window.localStorage.setItem('algoverse.tour', 'done'); } catch {} });
+const page = await browser.newPage({ viewport: { width: 1600, height: 900 }, reducedMotion: 'reduce' });
+page.on('pageerror', (e) => console.log('pageerror:', e.message));
+await page.goto('http://localhost:5173/algorithms/graphs/dijkstra', { waitUntil: 'networkidle' });
+await page.waitForTimeout(1200);
+await page.keyboard.press('Control+k');
+await page.waitForTimeout(600);
+const commands = await page.locator('#command-results li[role="presentation"]').allInnerTexts();
+const rows = await page.locator('#command-results li[role="option"]').count();
+console.log('sections:', commands.join(' | '), '| rows:', rows);
+const labels = await page.locator('#command-results li[role="option"] button span:nth-child(2) > span:first-child').allInnerTexts();
+console.log('first six:', labels.slice(0, 6));
+await page.screenshot({ path: '/tmp/v8/palette.png' });
+// run a command: cyberpunk theme
+await page.keyboard.type('cyberpunk');
+await page.waitForTimeout(400);
+await page.keyboard.press('Enter');
+await page.waitForTimeout(700);
+console.log('theme after command:', await page.evaluate(() => document.documentElement.dataset.theme));
+await page.screenshot({ path: '/tmp/v8/cyberpunk.png' });
+await browser.close();

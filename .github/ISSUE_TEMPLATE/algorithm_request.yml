@@ -1,0 +1,62 @@
+name: Algorithm request
+description: Suggest an algorithm, data structure or visualisation to add.
+title: "[algorithm] "
+labels: ["enhancement", "algorithm"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Adding an algorithm is a single file plus a registry row — see
+        [How to add a new algorithm in 5 steps](../blob/main/README.md#how-to-add-a-new-algorithm-in-5-steps).
+        If you are willing to write it yourself, say so and we will help with the review.
+  - type: input
+    id: name
+    attributes:
+      label: Algorithm name
+      placeholder: "Hopcroft–Karp"
+    validations:
+      required: true
+  - type: dropdown
+    id: category
+    attributes:
+      label: Category
+      options:
+        - Sorting
+        - Searching
+        - Linear structures
+        - Hashing
+        - Trees
+        - Graphs
+        - Recursion & backtracking
+        - Dynamic programming
+        - Greedy
+        - Strings
+        - Divide & conquer / misc
+        - Pattern (sliding window, two pointers, …)
+    validations:
+      required: true
+  - type: dropdown
+    id: snapshot
+    attributes:
+      label: Which snapshot shape fits best?
+      description: Reusing an existing shape is what makes a new algorithm inherit the motion, sound and badges for free.
+      options:
+        - Arrays (bars)
+        - Sequences (stack/queue/list/heap)
+        - Trees
+        - Graphs (canvas)
+        - Tables (DP, matrices)
+        - Call stack / recursion
+        - Boards (grids, mazes)
+        - Hash tables
+        - Intervals (scheduling)
+        - Not sure — need advice
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: Why is it worth visualising?
+      description: What is the "aha" moment a reader should get from the animation?
+    validations:
+      required: true

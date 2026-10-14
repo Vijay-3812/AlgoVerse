@@ -1,0 +1,311 @@
+@import './tokens.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+@layer base {
+  * {
+    border-color: rgb(var(--c-line) / 1);
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    scrollbar-gutter: stable;
+  }
+
+  body {
+    margin: 0;
+    min-height: 100dvh;
+    background-color: rgb(var(--c-bg));
+    color: rgb(var(--c-ink));
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, sans-serif;
+    font-feature-settings: 'cv11', 'ss01';
+    font-synthesis-weight: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    /* Theme cross-fade: colours only, so nothing re-layouts. */
+    transition: background-color var(--dur-slow) var(--ease-swift),
+      color var(--dur-slow) var(--ease-swift);
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background: rgb(var(--c-cyan) / 0.28);
+    color: rgb(var(--c-ink));
+  }
+
+  :focus-visible {
+    outline: 2px solid rgb(var(--ring) / 0.9);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  /* Keyboard users get a visible ring; mouse users get none. */
+  :focus:not(:focus-visible) {
+    outline: none;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: 'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+
+  code,
+  pre,
+  kbd {
+    font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-variant-ligatures: none;
+  }
+
+  input,
+  select,
+  textarea,
+  button {
+    font: inherit;
+    color: inherit;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgb(var(--c-line) / 0.85);
+    border: 2px solid transparent;
+    border-radius: 999px;
+    background-clip: content-box;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgb(var(--c-ink-faint) / 0.8);
+    background-clip: content-box;
+  }
+}
+
+/* ==========================================================================
+   Components — the glass + neon vocabulary
+   ========================================================================== */
+
+@layer components {
+  .glass {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(18px) saturate(140%);
+    -webkit-backdrop-filter: blur(18px) saturate(140%);
+    box-shadow: 0 1px 0 0 var(--glass-highlight) inset,
+      0 18px 50px -24px rgb(var(--shadow-color) / 0.9);
+  }
+
+  .glass-strong {
+    background: var(--glass-bg-strong);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(26px) saturate(150%);
+    -webkit-backdrop-filter: blur(26px) saturate(150%);
+    box-shadow: 0 1px 0 0 var(--glass-highlight) inset,
+      0 24px 60px -28px rgb(var(--shadow-color) / 0.95);
+  }
+
+  /* Animated conic gradient border. Wrap content in .gradient-border__inner. */
+  .gradient-border {
+    position: relative;
+    border-radius: var(--radius-xl);
+    padding: 1px;
+    background: linear-gradient(
+      120deg,
+      rgb(var(--c-cyan) / 0.7),
+      rgb(var(--c-violet) / 0.65),
+      rgb(var(--c-pink) / 0.6),
+      rgb(var(--c-cyan) / 0.7)
+    );
+    background-size: 220% 220%;
+    animation: gradient-pan 8s linear infinite;
+  }
+
+  .gradient-border__inner {
+    border-radius: calc(var(--radius-xl) - 1px);
+    background: var(--glass-bg-strong);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
+
+  /* Cursor spotlight: set --spot-x/--spot-y from useSpotlight(). */
+  .spotlight::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity var(--dur-base) var(--ease-swift);
+    background: radial-gradient(
+      circle var(--spot-r, 380px) at var(--spot-x, 50%) var(--spot-y, 50%),
+      rgb(var(--c-cyan) / 0.14),
+      transparent 62%
+    );
+  }
+  .spotlight:hover::after,
+  .spotlight:focus-within::after {
+    opacity: 1;
+  }
+
+  .text-gradient {
+    background: linear-gradient(
+      100deg,
+      rgb(var(--c-cyan)),
+      rgb(var(--c-violet)) 42%,
+      rgb(var(--c-pink)) 78%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .hairline {
+    background-image: linear-gradient(
+      90deg,
+      transparent,
+      rgb(var(--c-line) / 0.9),
+      transparent
+    );
+    height: 1px;
+  }
+
+  /* Scroll containers that stay elegant in a 3-column shell. */
+  /* Both axes: DP tables and wide matrices are the only things that need it. */
+  .scroll-both {
+    overflow: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+  }
+
+  .scroll-y {
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    scrollbar-color: rgb(var(--c-line)) transparent;
+  }
+  .scroll-x {
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scrollbar-width: thin;
+  }
+
+  .kbd {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 1.5rem;
+    height: 1.4rem;
+    padding: 0 0.35rem;
+    border-radius: 6px;
+    border: 1px solid var(--glass-border);
+    background: rgb(var(--c-surface) / 0.7);
+    color: rgb(var(--c-ink-dim));
+    font-size: 0.6875rem;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    line-height: 1;
+  }
+}
+
+/* ==========================================================================
+   Utilities
+   ========================================================================== */
+
+@layer utilities {
+  .grain {
+    position: relative;
+  }
+  .grain::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: var(--noise-opacity);
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .gpu {
+    transform: translateZ(0);
+    will-change: transform, opacity;
+  }
+
+  .preserve-3d {
+    transform-style: preserve-3d;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .mask-fade-b {
+    mask-image: linear-gradient(to bottom, black 82%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, black 82%, transparent 100%);
+  }
+  .mask-fade-r {
+    mask-image: linear-gradient(to right, black 88%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, black 88%, transparent 100%);
+  }
+}
+
+/* ==========================================================================
+   Keyframes (referenced by Tailwind theme + direct use)
+   ========================================================================== */
+
+@keyframes gradient-pan {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes aurora-pan {
+  0% {
+    transform: translate3d(-4%, -3%, 0) scale(1.08) rotate(0deg);
+  }
+  50% {
+    transform: translate3d(5%, 4%, 0) scale(1.16) rotate(10deg);
+  }
+  100% {
+    transform: translate3d(-4%, -3%, 0) scale(1.08) rotate(0deg);
+  }
+}
+
+/* ==========================================================================
+   Accessibility: motion budget
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .gradient-border {
+    animation: none;
+  }
+}

@@ -1,0 +1,66 @@
+name: Bug report
+description: Something behaves incorrectly — a wrong trace, a broken animation, a crash.
+title: "[bug] "
+labels: ["bug", "needs triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for the report. The fastest route to a fix is the exact algorithm,
+        the input you used, and the step number where it went wrong — the
+        scrubber position is meaningful, because every frame is a recorded snapshot.
+  - type: input
+    id: algorithm
+    attributes:
+      label: Algorithm / page
+      description: e.g. "Dijkstra", "AVL Tree", "landing page", "command palette"
+      placeholder: Dijkstra
+    validations:
+      required: true
+  - type: textarea
+    id: input
+    attributes:
+      label: Input used
+      description: The array/graph/tree you typed in, or "default random".
+      render: text
+      placeholder: "values: 42, 17, 93, 8, 64 (or 'download trace JSON')"
+  - type: input
+    id: step
+    attributes:
+      label: Step number (if the visualiser is involved)
+      description: The scrubber shows the step index — a screenshot of it helps a lot.
+      placeholder: "step 118 of 240"
+  - type: textarea
+    id: expected
+    attributes:
+      label: What should have happened
+      placeholder: "Relaxation should have updated D[v] to 7."
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: What actually happened
+      placeholder: "The distance stayed at 9 and the edge was painted as rejected."
+    validations:
+      required: true
+  - type: dropdown
+    id: browsers
+    attributes:
+      label: Browser
+      multiple: true
+      options:
+        - Chrome / Edge
+        - Firefox
+        - Safari
+        - Mobile Safari
+        - Mobile Chrome
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Before submitting
+      options:
+        - label: I checked the same input twice — traces are deterministic, so it reproduces.
+          required: true
+        - label: I searched existing issues.
+          required: true
