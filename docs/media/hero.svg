@@ -1,0 +1,111 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 320" width="1200" height="320" role="img" aria-label="AlgoVerse — a cinematic, trace-driven algorithm visualiser">
+  <title>AlgoVerse</title>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#05070f"/>
+      <stop offset="55%" stop-color="#0a0f1f"/>
+      <stop offset="100%" stop-color="#0d0a1e"/>
+    </linearGradient>
+    <linearGradient id="auroraA" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#00F5FF" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#00F5FF" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="auroraB" x1="1" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#8B5CF6" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#8B5CF6" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="auroraC" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0%" stop-color="#FF2E97" stop-opacity="0.45"/>
+      <stop offset="100%" stop-color="#FF2E97" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="barA" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0%" stop-color="#8B5CF6"/>
+      <stop offset="100%" stop-color="#00F5FF"/>
+    </linearGradient>
+    <linearGradient id="barB" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0%" stop-color="#FF2E97"/>
+      <stop offset="100%" stop-color="#A3FF12"/>
+    </linearGradient>
+    <filter id="glow" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="10" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <style>
+      .title { font: 700 64px "Segoe UI", Inter, system-ui, sans-serif; fill: #EAF2FF; letter-spacing: -1.5px; }
+      .sub   { font: 400 21px ui-monospace, "JetBrains Mono", monospace; fill: #8FA3C8; }
+      .tag   { font: 500 15px ui-monospace, "JetBrains Mono", monospace; fill: #6C7FA3; }
+      .dot   { animation: pulse 2.4s ease-in-out infinite; }
+      .dot2  { animation: pulse 2.4s ease-in-out infinite 0.6s; }
+      .dot3  { animation: pulse 2.4s ease-in-out infinite 1.2s; }
+      @keyframes pulse { 0%, 100% { opacity: 0.25; } 50% { opacity: 1; } }
+      .aur { animation: drift 18s ease-in-out infinite alternate; transform-origin: center; }
+      .aur2 { animation: drift 22s ease-in-out infinite alternate-reverse; transform-origin: center; }
+      .bar { transform-box: fill-box; transform-origin: bottom; animation: grow 3.6s cubic-bezier(.4,0,.2,1) infinite; }
+      .bar:nth-child(2n) { animation-delay: .25s; }
+      .bar:nth-child(3n) { animation-delay: .5s; }
+      .bar:nth-child(5n) { animation-delay: .75s; }
+      @keyframes grow { 0%, 100% { transform: scaleY(0.55); } 45% { transform: scaleY(1); } }
+      .scan { animation: sweep 6s linear infinite; }
+      @keyframes sweep { 0% { transform: translateX(-80px); opacity: 0; } 12% { opacity: 1; } 88% { opacity: 1; } 100% { transform: translateX(1120px); opacity: 0; } }
+      .cursor { animation: blink 1.1s steps(1) infinite; }
+      @keyframes blink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
+      @media (prefers-reduced-motion: reduce) {
+        .bar, .aur, .aur2, .scan, .dot, .dot2, .dot3, .cursor { animation: none; }
+      }
+    </style>
+  </defs>
+
+  <rect width="1200" height="320" rx="18" fill="url(#bg)"/>
+  <g opacity="0.85">
+    <ellipse class="aur"  cx="220" cy="90"  rx="360" ry="180" fill="url(#auroraA)"/>
+    <ellipse class="aur2" cx="980" cy="120" rx="380" ry="200" fill="url(#auroraB)"/>
+    <ellipse class="aur"  cx="620" cy="300" rx="420" ry="170" fill="url(#auroraC)"/>
+  </g>
+
+  <!-- grid lines -->
+  <g stroke="#1b2540" stroke-width="1" opacity="0.55">
+    <path d="M0 80 H1200 M0 160 H1200 M0 240 H1200"/>
+  </g>
+
+  <!-- the visualiser: one flame chart of bars -->
+  <g transform="translate(0,196)" filter="url(#glow)">
+    <g fill="url(#barA)">
+      <rect class="bar" x="64"  y="-46" width="16" height="46" rx="3"/>
+      <rect class="bar" x="96"  y="-78" width="16" height="78" rx="3"/>
+      <rect class="bar" x="128" y="-32" width="16" height="32" rx="3"/>
+      <rect class="bar" x="160" y="-96" width="16" height="96" rx="3"/>
+      <rect class="bar" x="192" y="-58" width="16" height="58" rx="3"/>
+      <rect class="bar" x="224" y="-112" width="16" height="112" rx="3"/>
+    </g>
+    <g fill="url(#barB)" opacity="0.95">
+      <rect class="bar" x="256" y="-70" width="16" height="70" rx="3"/>
+      <rect class="bar" x="288" y="-38" width="16" height="38" rx="3"/>
+      <rect class="bar" x="320" y="-88" width="16" height="88" rx="3"/>
+      <rect class="bar" x="352" y="-26" width="16" height="26" rx="3"/>
+    </g>
+    <g stroke="#00F5FF" stroke-width="2" opacity="0.9">
+      <path d="M60 20 H410"/>
+    </g>
+    <g fill="#00F5FF">
+      <circle class="dot"  cx="96"  cy="20" r="4"/>
+      <circle class="dot2" cx="224" cy="20" r="4"/>
+      <circle class="dot3" cx="352" cy="20" r="4"/>
+    </g>
+  </g>
+
+  <!-- scanning beam -->
+  <rect class="scan" x="0" y="0" width="2" height="320" fill="#00F5FF" opacity="0.6"/>
+
+  <text class="title" x="452" y="132">AlgoVerse</text>
+  <text class="sub"   x="454" y="168">watch algorithms think.</text>
+  <text class="tag"   x="454" y="204">pure generators → Trace&lt;Step[]&gt; → replay</text>
+
+  <g transform="translate(454,236)">
+    <g fill="#A3FF12" opacity="0.95">
+      <rect x="0" y="0" width="8" height="8" rx="2"/>
+    </g>
+    <text class="tag" x="18" y="8.5">68 algorithms · 12 families · 4 languages · one rAF loop</text>
+  </g>
+
+  <text class="cursor" x="1120" y="300" fill="#FF2E97" font-size="16" font-family="monospace">▌</text>
+</svg>

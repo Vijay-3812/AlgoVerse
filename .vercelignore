@@ -1,0 +1,11 @@
+# Never uploaded to the build container.
+node_modules
+dist
+coverage
+*.log
+
+# Local dev probes and screenshot output are not part of the deployed app.
+check-*.mjs
+measure-bars.mjs
+probe-bars.mjs
+docs/media
